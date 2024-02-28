@@ -56,9 +56,9 @@ void imprimir(sLibro libro)
 // Función para imprimir un usuario en forma de tabla
 void imprimir(sUsuario usuario)
 {
-	cout << "+------+-------------------------+----------------------+-------------------------+---------------+------------------" << endl;
-	cout << "| ID   | Nombre                  | Apellido             | Email                   | Teléfono      |     Direccion    |" << endl;
-	cout << "+------+-------------------------+----------------------+-------------------------+---------------+------------------" << endl;
+	cout << "+------+-------------------------+-------------------------+----------------------------+---------------+------------------" << endl;
+	cout << "| ID   |    Nombre               |     Apellido            |    Email                   | Teléfono      |     Direccion    |" << endl;
+	cout << "+------+-------------------------+-------------------------+----------------------------+---------------+------------------" << endl;
 	cout << "| " << setw(4) << usuario.iId << " | " << setw(22) << usuario.sNombre << " | " << setw(18) << usuario.sApellido << " | " << setw(24) << usuario.sEmail << " | " << setw(13) << usuario.sTelefono << " |" <<setw(10)<< usuario.sDireccion<< " |" << endl;
 	cout << "+------+-------------------------+----------------------+-------------------------+---------------+------------------" << endl;
 }
@@ -67,9 +67,9 @@ void imprimir(sUsuario usuario)
 // Función para imprimir un bibliotecario en forma de tabla
 void imprimir(sBibliotecario bibliotecario)
 {
-	cout << "+------+-------------------------+----------------------+-------------------------+-------+------------" << endl;
-	cout << "| ID   | Nombre                  | Apellido             | Email                   | Nivel |   Horario  |" << endl;
-	cout << "+------+-------------------------+----------------------+-------------------------+-------+------------" << endl;
+	cout << "+------+-------------------------+-------------------------+----------------------------+-------+------------" << endl;
+	cout << "| ID   |    Nombre              |     Apellido            |          Email             | Nivel |   Horario  |" << endl;
+	cout << "+------+-------------------------+---------------------   -+----------------------------+-------+------------" << endl;
 	cout << "| " << setw(4) << bibliotecario.iId << " | " << setw(22) << bibliotecario.sNombre << " | " << setw(18) << bibliotecario.sApellido << " | " << setw(24) << bibliotecario.sEmail << " | " << setw(5) << bibliotecario.iNivel << " |" <<setw(10)<< bibliotecario.sHorario<< " |" << endl;
 	cout << "+------+-------------------------+----------------------+-------------------------+-------+------------" << endl;
 }
@@ -138,7 +138,7 @@ void llenarDatos(sUsuario *arrUsuarios, int cant)
 	string listaNombres[] = {"Juan", "Pedro", "Maria", "Luisa", "Carlos", "Ana", "Diego", "Laura"};
 	string listaApellidos[] = {"Gomez", "Perez", "Lopez", "Gonzalez", "Martinez", "Gutierrez", "Rodriguez", "Perez"};
 	string listaDirecciones[] = {"Calle A", "Calle B", "Calle C", "Calle D", "Calle E", "Calle F", "Calle G", "Calle H"};
-
+	
 	
 	for (int i = 0; i < cant; ++i)
 	{
@@ -186,7 +186,7 @@ void llenarDatos(sBibliotecario *arrBibliotecarios, int cant)
 	}
 }
 
-// Función para verificar si un nombre y apellido ya está repetido en el array de personas
+// Función para verificar si un nombre y apellido ya están repetidos en el array de usuarios
 bool repetidos(string nombre, string apellido, sUsuario usuarios[], int cantUsuarios) {
 	for (int i = 0; i < cantUsuarios; i++) {
 		if (nombre == usuarios[i].sNombre && apellido == usuarios[i].sApellido)
@@ -195,7 +195,7 @@ bool repetidos(string nombre, string apellido, sUsuario usuarios[], int cantUsua
 	return false; // Si no encuentra nombres y apellidos iguales, devuelve false
 }
 
-// Función para verificar si un nombre y apellido ya está repetido en el array de bibliotecarios
+// Función para verificar si un nombre y apellido ya están repetidos en el array de bibliotecarios
 bool repetidos(string nombre, string apellido, sBibliotecario bibliotecarios[], int cantBibliotecarios) {
 	for (int i = 0; i < cantBibliotecarios; i++) {
 		if (nombre == bibliotecarios[i].sNombre && apellido == bibliotecarios[i].sApellido)
@@ -203,6 +203,7 @@ bool repetidos(string nombre, string apellido, sBibliotecario bibliotecarios[], 
 	}
 	return false; // Si no encuentra nombres y apellidos iguales, devuelve false
 }
+
 
 // Función para convertir una cadena a minúsculas
 string toLower(string str)
