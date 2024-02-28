@@ -42,7 +42,6 @@ struct sBibliotecario {
 bool repetidos(string nombre, string apellido, sUsuario usuarios[], int cantUsuarios);
 bool repetidos(string nombre, string apellido, sBibliotecario bibliotecarios[], int cantBibliotecarios);
 
-
 // Función para imprimir un libro en forma de tabla
 void imprimir(sLibro libro)
 {
@@ -52,7 +51,6 @@ void imprimir(sLibro libro)
 	cout << "| " << setw(20) << libro.sTitulo << " | " << setw(24) << libro.sAutor << " | " << setw(16) << libro.sISBN << " | " << setw(16) << libro.iAnioPublicacion << " | " << setw(24) << libro.sEditorial << " | " << setw(8) << libro.iNumeroPaginas << " |" << endl;
 	cout << "+-------------------------+-------------------------+----------------------+------------------+-------------------------+----------+" << endl;
 }
-
 
 // Función para imprimir un usuario en forma de tabla
 void imprimir(sUsuario usuario)
@@ -64,7 +62,6 @@ void imprimir(sUsuario usuario)
 	cout << "+------+-------------------------+----------------------+-------------------------+---------------+------------------" << endl;
 }
 
-
 // Función para imprimir un bibliotecario en forma de tabla
 void imprimir(sBibliotecario bibliotecario)
 {
@@ -74,7 +71,6 @@ void imprimir(sBibliotecario bibliotecario)
 	cout << "| " << setw(4) << bibliotecario.iId << " | " << setw(22) << bibliotecario.sNombre << " | " << setw(18) << bibliotecario.sApellido << " | " << setw(24) << bibliotecario.sEmail << " | " << setw(5) << bibliotecario.iNivel << " |" <<setw(10)<< bibliotecario.sHorario<< " |" << endl;
 	cout << "+------+-------------------------+----------------------+-------------------------+-------+------------" << endl;
 }
-
 
 // Función para llenar datos de libros
 void llenarDatos(sLibro *arrLibros, int cant)
@@ -213,7 +209,6 @@ string toLower(string str)
 	return str;
 }
 
-
 int main()
 {
 	srand(time(0));
@@ -297,23 +292,98 @@ int main()
 		case '3':
 		{
 			// Menú de búsquedas
-			string buscar;
-			cout << "Ingrese el titulo que desea buscar: ";
-			cin.ignore();
-			getline(cin, buscar);
-			bool encontrado = false;
-			cout << "Libros encontrados:\n";
-			for (int i = 0; i < NUM_ELEMENTOS; ++i)
+			char opcionBusqueda;
+			cout << "Seleccione el tipo de búsqueda:\n";
+			cout << "a) Buscar libro por título\n";
+			cout << "b) Buscar usuario por nombre o apellido\n";
+			cout << "c) Buscar bibliotecario por nombre o apellido\n";
+			cout << "x) Volver al menú principal\n";
+			cout << "Ingrese opción: ";
+			cin >> opcionBusqueda;
+			opcionBusqueda = tolower(opcionBusqueda);
+			
+			switch (opcionBusqueda)
 			{
-				if (toLower(arrLibros[i].sTitulo).find(toLower(buscar)) != string::npos)
+			case 'a':
+			{
+				string tituloBusqueda;
+				cout << "Ingrese el título del libro que desea buscar: ";
+				cin.ignore();
+				getline(cin, tituloBusqueda);
+				bool encontrado = false;
+				cout << "Libros encontrados:\n";
+				for (int i = 0; i < NUM_ELEMENTOS; ++i)
 				{
-					imprimir(arrLibros[i]);
-					encontrado = true;
+					if (toLower(arrLibros[i].sTitulo).find(toLower(tituloBusqueda)) != string::npos)
+					{
+						imprimir(arrLibros[i]);
+						encontrado = true;
+					}
 				}
+				if (!encontrado)
+				{
+					cout << "No se encontraron libros con ese título.\n";
+				}
+				break;
 			}
-			if (!encontrado)
+			case 'b':
 			{
-				cout << "No se encontraron libros con ese título.\n";
+				string nombreApellidoBusqueda;
+				cout << "Ingrese parte del nombre o del apellido del usuario a buscar: ";
+				cin.ignore();
+				getline(cin, nombreApellidoBusqueda);
+				
+				// Convertimos la búsqueda a minúsculas
+				nombreApellidoBusqueda = toLower(nombreApellidoBusqueda);
+				
+				bool encontrado = false;
+				for (int i = 0; i < NUM_ELEMENTOS; ++i)
+				{
+					string nombreCompleto = toLower(arrUsuarios[i].sNombre + " " + arrUsuarios[i].sApellido);
+					string apellido = toLower(arrUsuarios[i].sApellido);
+					// Realizamos la búsqueda tanto en el nombre completo como en el apellido
+					if (nombreCompleto.find(nombreApellidoBusqueda) != string::npos || apellido.find(nombreApellidoBusqueda) != string::npos)
+					{
+						cout << "Usuario encontrado:\n";
+						imprimir(arrUsuarios[i]);
+						encontrado = true;
+					}
+				}
+				if (!encontrado)
+					cout << "Usuario no encontrado.\n";
+				break;
+			}
+			case 'c':
+			{
+				string nombreApellidoBusqueda;
+				cout << "Ingrese parte del nombre o del apellido del bibliotecario a buscar: ";
+				cin.ignore();
+				getline(cin, nombreApellidoBusqueda);
+				
+				// Convertimos la búsqueda a minúsculas
+				nombreApellidoBusqueda = toLower(nombreApellidoBusqueda);
+				
+				bool encontrado = false;
+				for (int i = 0; i < NUM_ELEMENTOS; ++i)
+				{
+					string nombreCompleto = toLower(arrBibliotecarios[i].sNombre + " " + arrBibliotecarios[i].sApellido);
+					string apellido = toLower(arrBibliotecarios[i].sApellido);
+					// Realizamos la búsqueda tanto en el nombre completo como en el apellido
+					if (nombreCompleto.find(nombreApellidoBusqueda) != string::npos || apellido.find(nombreApellidoBusqueda) != string::npos)
+					{
+						cout << "Bibliotecario encontrado:\n";
+						imprimir(arrBibliotecarios[i]);
+						encontrado = true;
+					}
+				}
+				if (!encontrado)
+					cout << "Bibliotecario no encontrado.\n";
+				break;
+			}
+			case 'x':
+				break;
+			default:
+				cout << "Opción no válida. Intente de nuevo.\n";
 			}
 			break;
 		}
